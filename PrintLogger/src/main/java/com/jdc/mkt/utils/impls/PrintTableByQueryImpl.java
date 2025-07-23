@@ -1,23 +1,44 @@
 package com.jdc.mkt.utils.impls;
 
+
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 
-import com.jdc.mkt.utils.PrintLoggerQuery;
+import com.jdc.mkt.inter.PrintTableByQueryInt;
 
-public class PrintLoggerQueryImpl extends PrintLoggerTableImpl implements PrintLoggerQuery {
+public class PrintTableByQueryImpl implements PrintTableByQueryInt {
 
 	/**
 	 * @author MKT
-	 * @param query
-	 * @apiNote will show result table look like sql tables from console .
-	 */@Override
+	 * @param String query
+	 * @apiNote It is used for table create and drop.
+	 */
+	private JdbcConnectorImpl jdbcConnector;
+	
+	public PrintTableByQueryImpl(Class<?> config) {
+		jdbcConnector = new JdbcConnectorImpl(config);
+	}
+	@Override
+	public void manipulateTables(String sql) {
+		try (Statement st = jdbcConnector.getConnection().createStatement()) {
+
+			st.executeUpdate(sql);
+			String[] starray = sql.split(" ");
+			showResult(starray);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public void printResultSetAsTable(String query) {
 		String[] starray = query.split(" ");
 		System.out.println("\n     ******** Table: " + starray[starray.length - 1] + " *******");
 
-		try (Statement st = ConnectionManager.getConnectionManager().getConnection().prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY)) {
+		try (Statement st = jdbcConnector.getConnection().prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY)) {
 
 			ResultSet rs = st.executeQuery(query);
 			printResultSetAsTable(rs);
@@ -27,11 +48,30 @@ public class PrintLoggerQueryImpl extends PrintLoggerTableImpl implements PrintL
 		}
 	}
 
-	 /**
-	  * @author MKT
-	  * @param resultSet 
-	  * @apiNote will show result table look like sql tables from console .
-	  */@Override
+	private void showResult(String[] starray) {
+
+		System.out.println("\n   =============   " + starray[0].toUpperCase() + " TABLE   ==========");
+
+		if (starray[0].equalsIgnoreCase("drop")) {
+			System.out.println("\n     ******** Table: " + starray[starray.length - 1].toUpperCase() + " *******");
+
+		} else {
+			for (int i = 0; i < starray.length; i++) {
+				if (starray[i].equalsIgnoreCase("exists")) {
+					System.out.println("\n     ******** Table: " + starray[i + 1].toUpperCase() + " *******");
+					break;
+				}
+			}
+
+		}
+	}
+
+	/**
+	 * @author MKT
+	 * @param resultSet
+	 * @apiNote will show result table look like sql tables from console .
+	 */
+	@Override
 	public void printResultSetAsTable(ResultSet rs) {
 
 		try {
@@ -46,7 +86,7 @@ public class PrintLoggerQueryImpl extends PrintLoggerTableImpl implements PrintL
 				columnWidths[i] = columnNames[i].length();
 			}
 
-			rs.beforeFirst(); 
+			rs.beforeFirst();
 			while (rs.next()) {
 				for (int i = 0; i < columnCount; i++) {
 					Object value = rs.getObject(i + 1);
@@ -76,7 +116,7 @@ public class PrintLoggerQueryImpl extends PrintLoggerTableImpl implements PrintL
 		}
 	}
 
-	private  void printLine(int[] widths) {
+	private void printLine(int[] widths) {
 		for (int width : widths) {
 			System.out.print("+");
 			System.out.print("-".repeat(width + 2));
@@ -84,7 +124,7 @@ public class PrintLoggerQueryImpl extends PrintLoggerTableImpl implements PrintL
 		System.out.println("+");
 	}
 
-	private  void printRow(String[] values, int[] widths) {
+	private void printRow(String[] values, int[] widths) {
 		for (int i = 0; i < values.length; i++) {
 			System.out.printf("| %-" + widths[i] + "s ", values[i]);
 		}

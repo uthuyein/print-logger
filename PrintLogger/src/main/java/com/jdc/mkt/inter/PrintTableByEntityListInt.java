@@ -1,8 +1,8 @@
-package com.jdc.mkt.utils;
+package com.jdc.mkt.inter;
 
 import java.util.List;
 
-public interface PrintLoggerJpa {
+public interface PrintTableByEntityListInt {
 
 	<T>void printEntityTable(List<T> entityList, Class<?> entityName);
 }

@@ -1,4 +1,4 @@
-package com.jdc.mkt.utils.annotation;
+package com.jdc.mkt.utils.anno;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -11,8 +11,8 @@ import java.lang.annotation.Target;
 @Inherited
 public @interface Connector {
 
-	String url();
-	String driver() default "com.mysql.cj.jdbc.Driver";
+	String value() default "MYSQL";
+	String name() default "testDb";
 	String user() default "root";
 	String password() default "admin";
 }

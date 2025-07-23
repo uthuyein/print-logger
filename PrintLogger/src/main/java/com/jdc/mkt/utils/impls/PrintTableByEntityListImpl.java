@@ -4,11 +4,15 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jdc.mkt.utils.PrintLoggerJpa;
+import com.jdc.mkt.inter.PrintTableByEntityListInt;
 
 
-public class  PrintLoggerJpaImpl implements PrintLoggerJpa{
+public class  PrintTableByEntityListImpl extends PrintTableByQueryImpl implements PrintTableByEntityListInt{
 	
+	public PrintTableByEntityListImpl(Class<?> config) {
+		super(config);
+	}
+
 	/**
 	 * @author MKT
 	 * @param entityList from getResultList() from entityManager
@@ -17,7 +21,7 @@ public class  PrintLoggerJpaImpl implements PrintLoggerJpa{
 	 */
 	
 	@Override
-	public <T>  void printEntityTable(List<T> entityList, Class<?> entityName) {
+	public <T>   void printEntityTable(List<T> entityList, Class<?> entityName) {
 		
 		if (entityList == null || entityList.isEmpty()) {
 			System.out.println("No data.");
@@ -58,7 +62,7 @@ public class  PrintLoggerJpaImpl implements PrintLoggerJpa{
 		printLine(columnWidths);
 	}
 
-	public List<String> printEntityColumnNames(Class<?> entityClass) {
+	private List<String> printEntityColumnNames(Class<?> entityClass) {
 		List<String> names = new ArrayList<String>();
 		Field[] fields = entityClass.getDeclaredFields();
 
