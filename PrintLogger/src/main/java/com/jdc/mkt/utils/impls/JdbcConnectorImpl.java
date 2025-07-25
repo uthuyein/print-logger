@@ -30,7 +30,6 @@ class JdbcConnectorImpl {
 	protected Connector getConnector() throws RuntimeException {
 		if (configClass.isAnnotationPresent(Connector.class)) {
 			Connector connector = configClass.getAnnotation(Connector.class);
-			System.out.println(configClass.getCanonicalName());
 			return connector;
 		}
 		throw new RuntimeException("Connector annotation not present on class");
@@ -42,7 +41,6 @@ class JdbcConnectorImpl {
 		try {
 			
 			if (null == connectionData) {
-				System.out.println("connection : " + connectionData);
 				var connector = getConnector();
 				if (connector != null) {
 					var dbType = DatabaseType.valueOf(connector.value());
