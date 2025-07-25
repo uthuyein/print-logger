@@ -1,8 +1,5 @@
 package com.jdc.mkt.utils;
 
-import lombok.Getter;
-
-@Getter
 public enum DatabaseType {
 
 	MYSQL("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/"),
@@ -31,4 +28,26 @@ public enum DatabaseType {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public String getDriverClassName() {
+		return driverClassName;
+	}
+
+	public String getDbName() {
+		return dbName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+	
+	
 }

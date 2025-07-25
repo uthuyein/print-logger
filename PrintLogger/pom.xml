@@ -10,17 +10,11 @@
  	<hikari-version>6.3.0</hikari-version>
   </properties>
   <dependencies>
-   <dependency>
-    <groupId>org.projectlombok</groupId>
-    <artifactId>lombok</artifactId>
-    <version>1.18.38</version>
-   </dependency>
 	<dependency>
-  <groupId>org.reflections</groupId>
-  <artifactId>reflections</artifactId>
-  <version>0.10.2</version>
-</dependency>
-
+	  <groupId>org.reflections</groupId>
+	  <artifactId>reflections</artifactId>
+	  <version>0.10.2</version>
+	</dependency>
   </dependencies>
   <build>
   	<plugins>
