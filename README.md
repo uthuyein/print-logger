@@ -2,7 +2,7 @@
 
 ### ![Status](https://img.shields.io/badge/Create%20Local%20Repository-00809D) ###
 > go to your .m2 folder
-> and unzip ![Status](https://img.shields.io/badge/com.zip-386641) to your .m2>repository> .
+> and unzip ![Status](https://img.shields.io/badge/com.zip-386641) to your .m2>repository> com >
 > 
 ###  ![Status](https://img.shields.io/badge/Add%20Dependency-00809D) ###
 
