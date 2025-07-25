@@ -14,13 +14,15 @@ public class PrintTableByQueryImpl implements PrintTableByQueryInt {
 	 * @param String query
 	 * @apiNote It is used for table create and drop.
 	 */
-	private JdbcConnectorImpl jdbcConnector;
+	private  JdbcConnectorImpl jdbcConnector;
 	
 	public PrintTableByQueryImpl(Class<?> config) {
 		jdbcConnector = new JdbcConnectorImpl(config);
+		
 	}
 	@Override
-	public void manipulateTables(String sql) {
+	public void updateQueryAsTable(String sql) {
+		
 		try (Statement st = jdbcConnector.getConnection().createStatement()) {
 
 			st.executeUpdate(sql);

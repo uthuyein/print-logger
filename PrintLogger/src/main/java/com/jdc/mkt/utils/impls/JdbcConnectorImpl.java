@@ -16,48 +16,48 @@ class JdbcConnectorImpl {
 	 * @throws Exception if the connection cannot be established
 	 */
 	private static ConnectionData connectionData;
-	private  Class<?> configClass;
+	private static Class<?> configClass;
 
-	private static record ConnectionData(DatabaseType type,String className ,String url ,String user, String password) {}
-	
-	
-	JdbcConnectorImpl(Class<?> config) {
-		this.configClass = config;
-		
+	private static record ConnectionData(DatabaseType type, String className, String url, String user,
+			String password) {
 	}
 
-	
-	protected  Connector getConnector() throws RuntimeException {
+	JdbcConnectorImpl(Class<?> config) {
+		configClass = config;
+
+	}
+
+	protected Connector getConnector() throws RuntimeException {
 		if (configClass.isAnnotationPresent(Connector.class)) {
 			Connector connector = configClass.getAnnotation(Connector.class);
+			System.out.println(configClass.getCanonicalName());
 			return connector;
 		}
 		throw new RuntimeException("Connector annotation not present on class");
-		
+
 	}
 
-	public  Connection getConnection() throws RuntimeException {
+	public Connection getConnection() throws RuntimeException {
 
 		try {
+			
 			if (null == connectionData) {
-
+				System.out.println("connection : " + connectionData);
 				var connector = getConnector();
 				if (connector != null) {
 					var dbType = DatabaseType.valueOf(connector.value());
-					var url = dbType.getUrl()  + connector.name();
+					var url = dbType.getUrl() + connector.name();
 					var className = dbType.getDriverClassName();
-					connectionData = new ConnectionData(dbType,className,url, connector.user(), connector.password());
-				}
-				var driver = DriverManager.getConnection(connectionData.url(), connectionData.user(),
-						connectionData.password());
-
-				return driver;
+					connectionData = new ConnectionData(dbType, className, url, connector.user(), connector.password());
+				}			
 			}
+			return  DriverManager.getConnection(connectionData.url(), connectionData.user(),
+					connectionData.password());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Connector annotation not present on class");
 		}
-		return null;
 
 	}
 
