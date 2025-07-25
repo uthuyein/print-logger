@@ -1,5 +1,19 @@
-### print-logger ###
-# Usage of PrintLogger Example ###
+# ![Status](https://img.shields.io/badge/print-logger-brightgreen) #
+
+### ![Status](https://img.shields.io/badge/Create%20Local%20Repository-00809D) ###
+> go to your .m2 folder
+> and unzip ![Status](https://img.shields.io/badge/com.zip-386641) to your .m2>repository> .
+> 
+###  ![Status](https://img.shields.io/badge/Add%20Dependency-00809D) ###
+```
+ <dependency>
+   	<groupId>com.jdc.mkt</groupId>
+   	<artifactId>PrintLogger</artifactId>
+   	<version>1.0</version>
+   </dependency>
+```
+
+###  ![Status](https://img.shields.io/badge/Usage_of_PrintLogger_Example-00809D) ###
 ```
 package com.jdc.mkt;
 
